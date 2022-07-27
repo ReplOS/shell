@@ -419,21 +419,15 @@ class ControlsManager extends St.Widget {
             if (this._a11ySettings.get_boolean('stickykeys-enable'))
                 return;
 
-            const { initialState, finalState, transitioning } =
-                this._stateAdjustment.getStateTransitionParams();
-
-            const time = GLib.get_monotonic_time() / 1000;
-            const timeDiff = time - this._lastOverlayKeyTime;
-            this._lastOverlayKeyTime = time;
-
-            const shouldShift = St.Settings.get().enable_animations
-                ? transitioning && finalState > initialState
-                : Main.overview.visible && timeDiff < Overview.ANIMATION_TIME;
-
-            if (shouldShift)
-                this._shiftState(Meta.MotionDirection.UP);
-            else
-                Main.overview.toggle();
+            if (Main.overview.visible) {
+                if (this.dash.showAppsButton.checked) {
+                    Main.overview.hide();
+                } else {
+                    this._shiftState(Meta.MotionDirection.UP);
+                }
+            } else {
+                Main.overview.show(ControlsState.APP_GRID);
+            }
         });
 
         // connect_after to give search controller first dibs on the event

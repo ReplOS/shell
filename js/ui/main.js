@@ -897,7 +897,13 @@ function showRestartMessage(message) {
 var AnimationsSettings = class {
     constructor() {
         let backend = global.backend;
-        if (!backend.is_rendering_hardware_accelerated()) {
+        if (
+            !backend.is_rendering_hardware_accelerated() &&
+            GLib.getenv("GNOME_SHELL_FORCE_ENABLE_ANIMATIONS") != "1"
+        ) {
+            console.warn("Disabling animations (no HW acceleration)");
+            console.info("Re-enable with $GNOME_SHELL_FORCE_ENABLE_ANIMATIONS");
+
             St.Settings.get().inhibit_animations();
             return;
         }
