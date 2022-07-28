@@ -5,8 +5,8 @@ const { Clutter, Graphene, GObject, St } = imports.gi;
 
 const INDICATOR_INACTIVE_OPACITY = 128;
 const INDICATOR_INACTIVE_OPACITY_HOVER = 255;
-const INDICATOR_INACTIVE_SCALE = 2 / 3;
-const INDICATOR_INACTIVE_SCALE_PRESSED = 0.5;
+const INDICATOR_INACTIVE_SCALE = 1;
+const INDICATOR_INACTIVE_SCALE_PRESSED = 1;
 
 var PageIndicators = GObject.registerClass({
     Signals: { 'page-activated': { param_types: [GObject.TYPE_INT] } },
