@@ -70,10 +70,8 @@ class ControlsManagerLayout extends Clutter.BoxLayout {
                 thumbnailsHeight - spacing * expandFraction);
             break;
         case ControlsState.APP_GRID:
-            workspaceBox.set_origin(0, startY + searchHeight + spacing);
-            workspaceBox.set_size(
-                width,
-                Math.round(height * SMALL_WORKSPACE_RATIO));
+            workspaceBox.set_origin(0, startY);
+            workspaceBox.set_size(width, 0);
             break;
         }
 
@@ -312,7 +310,7 @@ class ControlsManager extends St.Widget {
                in the search entry when no search is
                active; it should not exceed ~30
                characters. */
-            hint_text: _('Type to search'),
+            hint_text: _('Search'),
             track_hover: true,
             can_focus: true,
         });

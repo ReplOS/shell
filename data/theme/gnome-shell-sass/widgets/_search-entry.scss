@@ -1,21 +1,28 @@
 // Search entry
 
-$search_entry_width: 320px;
-$search_entry_height: 36px;
+$search_entry_width: 580px;
+$search_entry_height: 56px;
+$search_entry_radius: 8px;
 
 %search_entry,
 .search-entry {
-  border-radius: $search_entry_height * 0.5; // half the height
+  border-radius: $search_entry_radius;
 
   margin-top: $base_padding * 2;
   margin-bottom: $base_padding;
-  padding: $base_padding+1 $base_padding+3;
+  padding: $base_padding+2 $base_padding+4;
   width: $search_entry_width;
 
   @include entry(normal);
   &:hover { @include entry(hover);}
   &:focus { @include entry(focus);}
   &:insensitive { @include entry(insensitive);}
+
+  border: 1px solid lighten($bg_color, 15%);
+  &:focus {
+    border-width: 2px;
+    padding: $base_padding+1 $base_padding+3;
+  }
 
   .search-entry-icon {
     color: inherit;

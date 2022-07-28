@@ -1,7 +1,7 @@
 // -*- mode: js; js-indent-level: 4; indent-tabs-mode: nil -*-
 /* exported SearchController */
 
-const { Clutter, GObject, St } = imports.gi;
+const { Clutter, Gio, GObject, St } = imports.gi;
 
 const Main = imports.ui.main;
 const Search = imports.ui.search;
@@ -72,7 +72,12 @@ var SearchController = GObject.registerClass({
 
         this._entry.set_primary_icon(new St.Icon({
             style_class: 'search-entry-icon',
-            icon_name: 'edit-find-symbolic',
+            //icon_name: 'edit-find-symbolic',
+            gicon: new Gio.FileIcon({
+                file: Gio.File.new_for_uri(
+                    "resource:///org/gnome/shell/theme/replit-prompt.svg"
+                ),
+            }),
         }));
         this._clearIcon = new St.Icon({
             style_class: 'search-entry-icon',
