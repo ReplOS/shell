@@ -8,6 +8,7 @@ const Signals = imports.signals;
 // this is defined here to make it available in imports.
 var ANIMATION_TIME = 250;
 
+const Background = imports.ui.background;
 const DND = imports.ui.dnd;
 const LayoutManager = imports.ui.layout;
 const Main = imports.ui.main;
@@ -21,6 +22,9 @@ const WorkspaceThumbnail = imports.ui.workspaceThumbnail;
 var DND_WINDOW_SWITCH_TIMEOUT = 750;
 
 var OVERVIEW_ACTIVATION_TIMEOUT = 0.5;
+
+var BLUR_BRIGHTNESS = 0.75;
+var BLUR_SIGMA = 10;
 
 var ShellInfo = class {
     constructor() {
@@ -61,18 +65,98 @@ var ShellInfo = class {
     }
 };
 
+var OverviewBackground = GObject.registerClass(
+class OverviewBackground extends St.Widget {
+    constructor() {
+        super({
+            style_class: 'overview-background',
+            layout_manager: new Clutter.BinLayout(),
+            x_expand: true,
+            y_expand: true,
+            effect: new Shell.BlurEffect({ name: 'blur' }),
+        });
+
+        const themeContext = St.ThemeContext.get_for_stage(global.stage);
+
+        let effect = this.get_effect("blur");
+        if (effect)
+            effect.set({
+                brightness: BLUR_BRIGHTNESS,
+                sigma: BLUR_SIGMA * themeContext.scale_factor,
+            });
+
+        this._layout();
+
+        global.display.connectObject('workareas-changed', () => {
+            this._layout();
+            this.queue_relayout();
+        }, this);
+
+        Main.layoutManager.connect("monitors-changed", () => this._layout());
+        
+        this.connect('destroy', this._onDestroy.bind(this));
+    }
+
+    vfunc_allocate(box) {
+        this.set_allocation(box);
+
+        let monitors = Main.layoutManager.monitors;
+        for (let i = 0; i < monitors.length; i++) {
+            const workArea = Main.layoutManager.getWorkAreaForMonitor(i);
+
+            const contentBox = new Clutter.ActorBox();
+            contentBox.set_origin(workArea.x, workArea.y);
+            contentBox.set_size(workArea.width, workArea.height);
+
+            this._bins[i].allocate(contentBox);
+        }
+    }
+
+    _layout() {
+        this._bins = [];
+        this._bgManagers = [];
+        
+        let monitors = Main.layoutManager.monitors;
+        for (let i = 0; i < monitors.length; i++) {
+            this._bins.push(new Clutter.Actor({
+                layout_manager: new Clutter.BinLayout(),
+                clip_to_allocation: true,
+            }));
+            this.add_child(this._bins[i]);
+
+            this._bgManagers.push(new Background.BackgroundManager({
+                container: this._bins[i],
+                monitorIndex: i,
+                controlPosition: false,
+            }));
+        }
+    }
+
+    _onDestroy() {
+        if (this._bgManager) {
+            this._bgManager.destroy();
+            this._bgManager = null;
+        }
+    }
+});
+
 var OverviewActor = GObject.registerClass(
-class OverviewActor extends St.BoxLayout {
+class OverviewActor extends St.Widget {
     _init() {
         super._init({
             name: 'overview',
             /* Translators: This is the main view to select
                 activities. See also note for "Activities" string. */
             accessible_name: _("Overview"),
-            vertical: true,
+
+            layout_manager: new Clutter.BinLayout(),
+            x_expand: true,
+            y_expand: true,
         });
 
         this.add_constraint(new LayoutManager.MonitorConstraint({ primary: true }));
+
+        this.add_child(new OverviewBackground());
 
         this._controls = new OverviewControls.ControlsManager();
         this.add_child(this._controls);
