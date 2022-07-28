@@ -1,6 +1,6 @@
 /* Dash */
 
-$dash_background_color: lighten($system_bg_color, 5%);
+$dash_background_color: transparentize(lighten($system_bg_color, 5%), $translucency);
 $dash_placeholder_size: 32px;
 $dash_padding: $base_padding*2; // 12px
 $dash_border_radius: $modal_radius + $dash_padding;

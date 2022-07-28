@@ -23,7 +23,7 @@
 
 // content
 .search-section-content {
-  background-color: lighten($system_bg_color, 5%);
+  background-color: transparentize(lighten($system_bg_color, 5%), $translucency);
   border-radius: $modal_radius*1.5;
   border: 1px solid $osd_outer_borders_color;
   color: $osd_fg_color;
