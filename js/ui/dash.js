@@ -216,6 +216,16 @@ class ShowAppsIcon extends DashItemContainer {
         this.setDragApp(null);
     }
 
+    vfunc_get_preferred_height(_forWidth) {
+        let themeNode = this.get_theme_node();
+        return themeNode.adjust_preferred_height(0, 0);
+    }
+
+    vfunc_get_preferred_width(_forHeight) {
+        let themeNode = this.get_theme_node();
+        return themeNode.adjust_preferred_width(0, 0);
+    }
+
     _createIcon(size) {
         this._iconActor = new St.Icon({
             icon_name: 'view-app-grid-symbolic',
