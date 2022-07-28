@@ -174,7 +174,7 @@
       </description>
     </key>
     <key name="toggle-overview" type="as">
-      <default>[<!--"&lt;Super&gt;s",-->"&lt;Super&gt;&lt;Tab&gt;"]</default>
+      <default>["&lt;Super&gt;s"]</default>
       <summary>Keybinding to open the overview</summary>
       <description>
         Keybinding to open the Activities Overview.
