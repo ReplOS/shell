@@ -8,7 +8,6 @@ $panel_transition_duration: 250ms; // same as the overview transition duration
 
 #panel {
   background-color: $panel_bg_color;
-  font-weight: bold;
   height: $panel_height;
   @extend %numeric;
   transition-duration: $panel_transition_duration;
@@ -22,24 +21,19 @@ $panel_transition_duration: 250ms; // same as the overview transition duration
 
   // panel menus
   .panel-button {
-    font-weight: bold;
     color: $panel_fg_color;
-    -natural-hpadding: $base_padding * 2;
+    -natural-hpadding: $base_padding;
     -minimum-hpadding: $base_padding;
     transition-duration: 150ms;
-    border: 3px solid transparent;
-    border-radius: 99px;
 
     &.clock-display {
       .clock {
         transition-duration: 150ms;
-        border: 3px solid transparent;
-        border-radius: 99px;
       }
     }
 
     &.screen-recording-indicator {
-      box-shadow: inset 0 0 0 100px $screenshot_ui_button_red;
+      color: $screenshot_ui_button_red;
 
       StBoxLayout {
         spacing: $base_padding;
@@ -51,48 +45,48 @@ $panel_transition_duration: 250ms; // same as the overview transition duration
     }
 
     &:active, &:overview, &:focus, &:checked {
-      box-shadow: inset 0 0 0 100px transparentize($panel_fg_color, 0.8);
+      color: transparentize($panel_fg_color, 0.2);
 
       // The clock display needs to have the background on .clock because
       // we want to exclude the do-not-disturb indicator from the background
       &.clock-display {
-        box-shadow: none;
+        color: $panel_fg_color;
 
         .clock {
-          box-shadow: inset 0 0 0 100px transparentize($panel_fg_color, 0.8);
+          color: transparentize($panel_fg_color, 0.2);
         }
       }
 
       &.screen-recording-indicator {
-        box-shadow: inset 0 0 0 100px transparentize($screenshot_ui_button_red, 0.15);
+        color: transparentize($screenshot_ui_button_red, 0.15);
       }
     }
 
     &:hover {
-      box-shadow: inset 0 0 0 100px transparentize($panel_fg_color, 0.85);
+      color: transparentize($panel_fg_color, 0.15);
       &.clock-display {
-        box-shadow: none;
+        color: $panel_fg_color;
         .clock {
-          box-shadow: inset 0 0 0 100px transparentize($panel_fg_color, 0.85);
+          color: transparentize($panel_fg_color, 0.15);
         }
       }
 
       &.screen-recording-indicator {
-        box-shadow: inset 0 0 0 100px transparentize($screenshot_ui_button_red, 0.1);
+        color: transparentize($screenshot_ui_button_red, 0.1);
       }
     }
     
     &:active:hover, &:overview:hover, &:focus:hover, &:checked:hover {
-      box-shadow: inset 0 0 0 100px transparentize($panel_fg_color, 0.75);
+      color: transparentize($panel_fg_color, 0.25);
       &.clock-display {
-        box-shadow: none;
+        color: $panel_fg_color;
         .clock {
-          box-shadow: inset 0 0 0 100px transparentize($panel_fg_color, 0.75);
+          color: transparentize($panel_fg_color, 0.25);
         }
       }
 
       &.screen-recording-indicator {
-        box-shadow: inset 0 0 0 100px transparentize($screenshot_ui_button_red, 0.2);
+        color: transparentize($screenshot_ui_button_red, 0.2);
       }
     }
 
@@ -124,46 +118,46 @@ $panel_transition_duration: 250ms; // same as the overview transition duration
   &:overview {
     .panel-button {
       &:active, &:overview, &:focus, &:checked {
-        box-shadow: inset 0 0 0 100px rgba(255,255,255, 0.15);
+        color: rgba(255,255,255, 0.85);
 
         &.clock-display {
-          box-shadow: none;
+          color: $panel_fg_color;
 
           .clock {
-            box-shadow: inset 0 0 0 100px rgba(255,255,255, 0.15);
+            color: rgba(255,255,255, 0.85);
           }
         }
 
         &.screen-recording-indicator {
-          box-shadow: inset 0 0 0 100px transparentize($screenshot_ui_button_red, 0.15);
+          color: transparentize($screenshot_ui_button_red, 0.15);
         }
       }
 
       &:hover {
-        box-shadow: inset 0 0 0 100px rgba(255,255,255, 0.10);
+        color: rgba(255,255,255, 0.90);
         &.clock-display {
-          box-shadow: none;
+          color: $panel_fg_color;
           .clock {
-            box-shadow: inset 0 0 0 100px rgba(255,255,255, 0.10);
+            color: rgba(255,255,255, 0.90);
           }
         }
 
         &.screen-recording-indicator {
-          box-shadow: inset 0 0 0 100px transparentize($screenshot_ui_button_red, 0.1);
+          color: transparentize($screenshot_ui_button_red, 0.1);
         }
       }
       
       &:active:hover, &:overview:hover, &:focus:hover, &:checked:hover {
-        box-shadow: inset 0 0 0 100px rgba(255,255,255, 0.2);
+        color: rgba(255,255,255, 0.8);
         &.clock-display {
-          box-shadow: none;
+          color: $panel_fg_color;
           .clock {
-            box-shadow: inset 0 0 0 100px rgba(255,255,255, 0.2);
+            color: rgba(255,255,255, 0.8);
           }
         }
 
         &.screen-recording-indicator {
-          box-shadow: inset 0 0 0 100px transparentize($screenshot_ui_button_red, 0.2);
+          color: transparentize($screenshot_ui_button_red, 0.2);
         }
       }
     }

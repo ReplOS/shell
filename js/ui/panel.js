@@ -238,7 +238,7 @@ class ActivitiesButton extends PanelMenu.Button {
         /* Translators: If there is no suitable word for "Activities"
            in your language, you can use the word for "Overview". */
         this._label = new St.Label({
-            text: _('Activities'),
+            text: _('Windows'),
             y_align: Clutter.ActorAlign.CENTER,
         });
         this.add_actor(this._label);
